@@ -1,4 +1,4 @@
-module goimagehash
+module github.com/arthurhenrique/goimagehash
 
 go 1.15
 
