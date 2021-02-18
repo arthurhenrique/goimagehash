@@ -8,8 +8,9 @@ import (
 	"errors"
 	"image"
 
-	"github.com/corona10/goimagehash/etcs"
-	"github.com/corona10/goimagehash/transforms"
+	"github/arthurhenrique/goimagehash/etcs"
+	"github/arthurhenrique/goimagehash/transforms"
+
 	"github.com/nfnt/resize"
 )
 

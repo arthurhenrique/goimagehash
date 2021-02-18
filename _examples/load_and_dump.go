@@ -7,7 +7,7 @@ import (
 	"image/jpeg"
 	"os"
 
-	"github.com/corona10/goimagehash"
+	"github.com/arthurhenrique/goimagehash"
 )
 
 func main() {
