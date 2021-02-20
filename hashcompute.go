@@ -85,23 +85,25 @@ func PerceptionHash(img image.Image) (*ImageHash, error) {
 	return phash, nil
 }
 
-// PerceptionHash32 function returns a hash computation of phash.
+// PerceptionHashImageDedup function returns a hash computation of phash.
 // Implementation follows
 // http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html
-func PerceptionHash32(img image.Image) (*ImageHash, error) {
+// Based on imagededup Jpeg result
+// https://github.com/idealo/imagededup
+func PerceptionHashImageDedup(img image.Image) (*ImageHash, error) {
 	if img == nil {
 		return nil, errors.New("Image object can not be nil")
 	}
 
 	phash := NewImageHash(0, PHash)
-	resized := resize.Resize(32, 32, img, resize.Bilinear)
+	resized := resize.Resize(64, 64, img, resize.Lanczos3)
 	pixels := transforms.Rgb2Gray(resized)
-	dct := transforms.DCT2D(pixels, 32, 32)
+	dct := transforms.DCT2D(pixels, 64, 64)
 	flattens := transforms.FlattenPixels(dct, 8, 8)
-	median := etcs.MedianOfPixels(flattens)
+	median := etcs.MedianOfPixels(flattens[1:])
 
 	for idx, p := range flattens {
-		if p > median {
+		if p >= median {
 			phash.leftShiftSet(len(flattens) - idx - 1)
 		}
 	}
